@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(path = "/api/users")
 @Log4j2
 public class UserController {
-    private final UserService service;
+    private final UserServiceImpl service;
 
     @SuppressWarnings("static-access")
     @PostMapping( "/save")
@@ -38,6 +38,7 @@ public class UserController {
     public ResponseEntity<List<UserDto>> findAll(PageRequestVo vo){
         return ResponseEntity.ok(service.findAll());
     }
+
     @GetMapping("/detail")
     public ResponseEntity<Optional<UserDto>> findById(@RequestParam Long id) {
         return ResponseEntity.ok(service.findById(id));
@@ -54,19 +55,27 @@ public class UserController {
     @GetMapping("/count")
     public ResponseEntity<MessengerVo> count() {
         return ResponseEntity.ok(service.count());
-
     }
+
     @PostMapping("/search")
     public ResponseEntity<List<UserDto>> findUsersByName(@RequestBody UserDto param) {
         return ResponseEntity.ok(service.findUsersByName(param.getName()));
     }
+
     @PostMapping(path = "/login")
     public ResponseEntity<MessengerVo> login(@RequestBody UserDto dto) {
         log.info(dto);
         return ResponseEntity.ok(service.login(dto));
     }
+
     @GetMapping("/exists")
-    public ResponseEntity<Boolean> existsById(@RequestParam long id) {
+    public ResponseEntity<Boolean> existsById(@RequestParam("id") long id) {
         return ResponseEntity.ok(service.existsById(id));
+    }
+
+    @GetMapping("/exists-username")
+    public ResponseEntity<MessengerVo> existsByUsername(@RequestParam("username") String username) {
+        log.info("cont" + username);
+        return ResponseEntity.ok(service.existsByUsername(username));
     }
 }

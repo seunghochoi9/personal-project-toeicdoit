@@ -1,50 +1,64 @@
 'use client';
 import Link from "next/link";
-import { Button, Input } from "@mui/material";
-import { PG } from "./component/common/enums/PG";
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { API } from '@/app/component/common/enums/API';
-import AxiosConfig, { instance } from '@/app/component/common/configs/axios-config';
-import { NextPage } from 'next';
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "./component/user/service/user-service";
-import { getAuth } from "./component/user/service/user-slice";
+import { existsId, login } from "./component/user/service/user-service";
+import { getAuth, getExistsId } from "./component/user/service/user-slice";
 import { IUser } from "./component/user/model/user";
-import nookies, { parseCookies, destroyCookie, setCookie } from 'nookies'
+import { parseCookies, setCookie } from "nookies";
+import { jwtDecode } from "jwt-decode";
+import { PG } from "./component/common/enums/PG";
 
 export default function Home() {
-  const [user, setUser] = useState({} as IUser)
   const router = useRouter();
   const dispatch = useDispatch();
   const auth = useSelector(getAuth);
 
+  const [user, setUser] = useState({} as IUser)
+  const [isIdCheck, setIsIdCheck] = useState('')
+  const IsWrongId = useSelector(getExistsId)
+  // const IsWrongPw = useSelector()
+
   const handleUsername = (e: any) => {
-    setUser({ ...user, username: e.target.value })
+    const ID_CHECK = /^[a-zA-Z][a-zA-Z0-9]{5,19}$/g;
+    // 영어 시작하는 6~20자의 영어 대소문자 또는 숫자
+    if (ID_CHECK.test(e.target.value)) {
+      setIsIdCheck('true')
+      setUser({ ...user, username: e.target.value })
+    } else {
+      setIsIdCheck('false')
+    }
   }
 
   const handlePassword = (e: any) => {
+    const PW_CHECK = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]).{7,19}$/g;
+    // 영어 대소문자 , 숫자, 특수문자 각 1개씩 필요, 8~20
+    // if(){
+    // }else{alert("잘못된 형식의 비번 입니다.")}
     setUser({ ...user, password: e.target.value })
   }
 
   const handleSubmit = () => {
     console.log('user...' + JSON.stringify(user))
-    dispatch(login(user))
+    dispatch(existsId(user.username))
+    // dispatch(login(user))
   }
 
   useEffect(() => {
+    console.log(IsWrongId.message)
     if (auth.message === "SUCCESS") {
       setCookie({}, 'message', auth.message, { httpOnly: false, path: '/' })
       setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
       console.log('서버에서 넘어온 메시지 ' + parseCookies().message)
       console.log('서버에서 넘어온 토큰 ' + parseCookies().token)
-      router.push(`${PG.BOARD}/list`)
+      // router.push(`${PG.BOARD}/list`)
+      // 토큰 NULL이라 에러남 고쳐야 됨 0419
+      // console.log("토큰을 디코드한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().token)))
     } else {
       console.log('LOGIN FAIL')
     }
   }, [auth])
-
 
   return (<div className='text-center'>
     <div>Welcome To React !!</div><br />
@@ -70,6 +84,9 @@ export default function Home() {
               required
             />
           </div>
+          {IsWrongId.message === "FAILURE" && (<pre><h6 className="text-red-700">등록된 아이디 정보가 없습니다.</h6></pre>)}
+          {isIdCheck === 'false' && (<pre><h6 className="text-red-700">사용 불가한 아이디 입니다.</h6></pre>)}
+          {isIdCheck === 'true' && (<pre><h6 className="text-green-700">사용 가능한 아이디 입니다.</h6></pre>)}
           <div className="mt-4 flex flex-col justify-between">
             <div className="flex justify-between">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -87,6 +104,9 @@ export default function Home() {
               Forget Password?
             </a>
           </div>
+          {/* {IsWrongPw && (<pre>
+            <h6 className="text-red-500">잘못된 비번 입니다.</h6>
+          </pre>)} */}
           <div className="mt-8">
             <button onClick={handleSubmit} className="bg-blue-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-600">
               Login
