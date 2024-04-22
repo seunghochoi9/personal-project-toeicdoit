@@ -22,13 +22,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [showHeader, setShowHeader] = useState<Boolean>(false);  
+  const [showHeader, setShowHeader] = useState<Boolean>(false);
   return (
     <html lang="en">
       <body className={inter.className}>
-        {parseCookies().message === 'SUCCESS'&&<Header/>}
+
         <div className="mt-100">
-          <ReduxProvider > {children}</ReduxProvider>
+          <ReduxProvider > {parseCookies().message === 'SUCCESS' && <Header />} {children} </ReduxProvider>
         </div>
       </body>
     </html>

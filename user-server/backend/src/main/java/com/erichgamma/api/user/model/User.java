@@ -24,7 +24,7 @@ public class User extends BaseEntity {
     private String name;
     private String phone;
     private String job;
-    private String token;
+    private String accessToken;
 
     @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private List<Article> articlesId;

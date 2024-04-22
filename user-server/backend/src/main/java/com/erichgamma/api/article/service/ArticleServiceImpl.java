@@ -3,15 +3,11 @@ package com.erichgamma.api.article.service;
 import com.erichgamma.api.article.model.Article;
 import com.erichgamma.api.article.repository.ArticleRepository;
 import com.erichgamma.api.article.model.ArticleDto;
-import com.erichgamma.api.board.model.Board;
 import com.erichgamma.api.board.repository.BoardRepository;
 import com.erichgamma.api.common.component.MessengerVo;
-import com.erichgamma.api.common.component.PageRequestVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;

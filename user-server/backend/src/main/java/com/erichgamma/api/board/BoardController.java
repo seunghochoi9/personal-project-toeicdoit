@@ -1,13 +1,9 @@
 package com.erichgamma.api.board;
 
 import com.erichgamma.api.board.model.BoardDto;
-import com.erichgamma.api.board.repository.BoardRepository;
 import com.erichgamma.api.board.service.BoardService;
-import com.erichgamma.api.board.service.BoardServiceImpl;
 import com.erichgamma.api.common.component.MessengerVo;
-import com.erichgamma.api.common.component.PageRequestVo;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import com.erichgamma.api.common.component.pagination.PageRequestVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;

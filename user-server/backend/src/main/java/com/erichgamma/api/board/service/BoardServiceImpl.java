@@ -4,7 +4,6 @@ import com.erichgamma.api.board.model.Board;
 import com.erichgamma.api.board.model.BoardDto;
 import com.erichgamma.api.board.repository.BoardRepository;
 import com.erichgamma.api.common.component.MessengerVo;
-import com.erichgamma.api.common.component.PageRequestVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

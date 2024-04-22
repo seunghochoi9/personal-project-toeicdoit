@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from "react-redux";
 import { existsId, login } from "./component/user/service/user-service";
@@ -14,9 +14,11 @@ export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
   const auth = useSelector(getAuth);
+  const PasswordRef = useRef<HTMLInputElement>(null);
 
   const [user, setUser] = useState({} as IUser)
-  const [isIdCheck, setIsIdCheck] = useState('')
+  const [idCheck, setIdCheck] = useState('')
+  const [isPwCheck, setIsPwCheck] = useState('')
   const IsWrongId = useSelector(getExistsId)
   // const IsWrongPw = useSelector()
 
@@ -24,10 +26,10 @@ export default function Home() {
     const ID_CHECK = /^[a-zA-Z][a-zA-Z0-9]{5,19}$/g;
     // 영어 시작하는 6~20자의 영어 대소문자 또는 숫자
     if (ID_CHECK.test(e.target.value)) {
-      setIsIdCheck('true')
+      setIdCheck('true')
       setUser({ ...user, username: e.target.value })
     } else {
-      setIsIdCheck('false')
+      setIdCheck('false')
     }
   }
 
@@ -40,30 +42,58 @@ export default function Home() {
   }
 
   const handleSubmit = () => {
-    console.log('user...' + JSON.stringify(user))
     dispatch(existsId(user.username))
-    // dispatch(login(user))
+      .then((res: any) => {
+        if (res.payload.message === "SUCCESS") {
+          dispatch(login(user))
+            .then((resp: any) => {
+              if (resp.payload.message === "SUCCESS") {
+                console.log('서버에서 넘어온 payload ' + JSON.stringify(resp))
+                setCookie({}, 'message', resp.payload.message, { httpOnly: false, path: '/' })
+                setCookie({}, 'accessToken', resp.payload.accessToken, { httpOnly: false, path: '/' })
+                console.log('서버에서 넘어온 메세지 ' + parseCookies().message)
+                console.log('서버에서 넘어온 토큰 ' + parseCookies().accessToken)
+                console.log("토큰을 디코드한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().accessToken)))
+                router.push(`${PG.BOARD}/list`)
+              }
+            })
+            .catch((err: any) => {
+              console.log("로그인 실패")
+            })
+        } else {
+          console.log("아이디가 존재하지 않습니다.")
+        }
+      })
+      .catch((err: any) => { })
+      .finally(() => {
+        console.log("최종적으로 반드시 이뤄져야 할 로직")
+      })
+    if (PasswordRef.current) {
+      PasswordRef.current.value = "";
+    }
   }
 
-  useEffect(() => {
-    console.log(IsWrongId.message)
-    if (auth.message === "SUCCESS") {
-      setCookie({}, 'message', auth.message, { httpOnly: false, path: '/' })
-      setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
-      console.log('서버에서 넘어온 메시지 ' + parseCookies().message)
-      console.log('서버에서 넘어온 토큰 ' + parseCookies().token)
-      // router.push(`${PG.BOARD}/list`)
-      // 토큰 NULL이라 에러남 고쳐야 됨 0419
-      // console.log("토큰을 디코드한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().token)))
-    } else {
-      console.log('LOGIN FAIL')
-    }
-  }, [auth])
+
+
+  // useEffect(() => {
+  //   console.log(IsWrongId.message)
+  //   if (auth.message === "SUCCESS") {
+  //     setCookie({}, 'message', auth.message, { httpOnly: false, path: '/' })
+  //     setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
+  //     console.log('서버에서 넘어온 메시지 ' + parseCookies().message)
+  //     console.log('서버에서 넘어온 토큰 ' + parseCookies().token)
+  //     router.push(`${PG.BOARD}/list`)
+  //     //토큰 NULL이라 에러남 고쳐야 됨 0419
+  //     console.log("토큰을 디코드한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().token)))
+  //   } else {
+  //     console.log('LOGIN FAIL')
+  //   }
+  // }, [auth])
 
   return (<div className='text-center'>
     <div>Welcome To React !!</div><br />
     <h2>Clarinda</h2>
-    <h2>Boilermaker</h2>
+    <h2>Boilermaker1!</h2>
     <div className="flex items-center justify-center w-full px-5 sm:px-0">
       <div className="flex bg-white rounded-lg shadow-lg border overflow-hidden max-w-sm lg:max-w-4xl w-full">
         <div
@@ -85,8 +115,8 @@ export default function Home() {
             />
           </div>
           {IsWrongId.message === "FAILURE" && (<pre><h6 className="text-red-700">등록된 아이디 정보가 없습니다.</h6></pre>)}
-          {isIdCheck === 'false' && (<pre><h6 className="text-red-700">사용 불가한 아이디 입니다.</h6></pre>)}
-          {isIdCheck === 'true' && (<pre><h6 className="text-green-700">사용 가능한 아이디 입니다.</h6></pre>)}
+          {idCheck === 'false' && (<pre><h6 className="text-red-700">사용 불가한 아이디 입니다.</h6></pre>)}
+          {idCheck === 'true' && (<pre><h6 className="text-green-700">사용 가능한 아이디 입니다.</h6></pre>)}
           <div className="mt-4 flex flex-col justify-between">
             <div className="flex justify-between">
               <label className="block text-gray-700 text-sm font-bold mb-2">

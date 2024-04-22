@@ -1,6 +1,6 @@
 package com.erichgamma.api.common.security.service;
 
-import com.erichgamma.api.common.component.JwtProvider;
+import com.erichgamma.api.common.component.security.JwtProvider;
 import com.erichgamma.api.common.component.MessengerVo;
 import com.erichgamma.api.user.model.UserDto;
 import com.erichgamma.api.user.repository.UserRepository;
@@ -22,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
                 dto.getUsername()).get().getPassword().equals(dto.getPassword());
         return MessengerVo.builder()
                 .message(flag ? "SUCCESS" : "FAILURE")
-                .token(flag ? jwt.createToken(dto) : "Noe")
+                .accessToken(flag ? jwt.createToken(dto) : "Noe")
                 .build();
     }
 

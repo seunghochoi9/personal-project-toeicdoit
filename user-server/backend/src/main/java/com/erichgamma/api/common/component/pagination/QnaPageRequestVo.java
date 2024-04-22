@@ -1,4 +1,4 @@
-package com.erichgamma.api.common.component;
+package com.erichgamma.api.common.component.pagination;
 
 public class QnaPageRequestVo {
 

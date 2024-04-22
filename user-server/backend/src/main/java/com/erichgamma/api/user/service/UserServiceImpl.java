@@ -1,7 +1,7 @@
 package com.erichgamma.api.user.service;
 
 
-import com.erichgamma.api.common.component.JwtProvider;
+import com.erichgamma.api.common.component.security.JwtProvider;
 import com.erichgamma.api.common.component.MessengerVo;
 import com.erichgamma.api.user.model.User;
 import com.erichgamma.api.user.model.UserDto;
@@ -94,37 +94,30 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public MessengerVo login(UserDto dto) {
+        log.info("login Impl: " + dto);
         User user = repository.findUserByUsername(dto.getUsername()).get();
-        String token = jwt.createToken(entityToDto(user));
+        String accessToken = jwt.createToken(entityToDto(user));
         boolean flag = user.getPassword().equals(dto.getPassword());
 
         // 토큰을 각 섹션(Header, Payload, Signature)으로 분할
-        String[] chunks = token.split("\\.");
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-
-        String header = new String(decoder.decode(chunks[0]));
-        String payload = new String(decoder.decode(chunks[1]));
-
-        repository.modifyTokenByToken(user.getId(), token);
-
-        log.info("token header: " + header);
-        log.info("token payload: " + payload);
+        jwt.getPayload(accessToken);
 
         return MessengerVo.builder()
                 .message(flag ? "SUCCESS" : "FAILURE")
-                .token(flag ? token : "None")
+                .accessToken(flag ? accessToken : "None")
                 .build();
     }
 
     @Override
     public MessengerVo existsByUsername(String username) {
+        log.info("existsByUsername Impl" + username);
         boolean flag = false;
-        if (repository.existsByUsername(username) == null){
+        if (repository.existsByUsername(username) == null) {
             flag = false;
         } else {
             flag = true;
         }
-        log.info("flag: " + flag);
+        log.info("existsByUsername flag: " + flag);
         return MessengerVo.builder()
                 .message(flag ? "SUCCESS" : "FAILURE")
                 .build();

@@ -19,8 +19,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findUsersByJob(String job);
 
     @Modifying
-    @Query("update users set token =:token where id =:id" )
-    void modifyTokenByToken(@Param("id") Long id, String token);
+    @Query("update users set accessToken =:accessToken where id =:id" )
+    void modifyTokenByToken(@Param("id") Long id, String accessToken);
 
     @Query("select a from users a where a.username =:username" )
     User existsByUsername(@Param("username") String username);

@@ -1,17 +1,12 @@
 package com.erichgamma.api.article;
 
 import com.erichgamma.api.article.model.ArticleDto;
-import com.erichgamma.api.article.repository.ArticleRepository;
-import com.erichgamma.api.article.service.ArticleService;
 import com.erichgamma.api.article.service.ArticleServiceImpl;
 import com.erichgamma.api.common.component.MessengerVo;
-import com.erichgamma.api.common.component.PageRequestVo;
-import com.erichgamma.api.common.service.AbstractService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

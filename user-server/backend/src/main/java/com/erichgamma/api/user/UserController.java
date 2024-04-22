@@ -3,16 +3,12 @@ package com.erichgamma.api.user;
 import java.util.*;
 
 import com.erichgamma.api.common.component.MessengerVo;
-import com.erichgamma.api.common.component.PageRequestVo;
+import com.erichgamma.api.common.component.pagination.PageRequestVo;
 import com.erichgamma.api.user.model.UserDto;
-import com.erichgamma.api.user.repository.UserRepository;
-import com.erichgamma.api.user.service.UserService;
 import com.erichgamma.api.user.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +60,7 @@ public class UserController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<MessengerVo> login(@RequestBody UserDto dto) {
-        log.info(dto);
+        log.info("login con: "+dto);
         return ResponseEntity.ok(service.login(dto));
     }
 
@@ -75,7 +71,7 @@ public class UserController {
 
     @GetMapping("/exists-username")
     public ResponseEntity<MessengerVo> existsByUsername(@RequestParam("username") String username) {
-        log.info("cont" + username);
+        log.info("existsByUsername con: " + username);
         return ResponseEntity.ok(service.existsByUsername(username));
     }
 }
