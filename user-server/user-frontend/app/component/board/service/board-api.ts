@@ -1,8 +1,8 @@
 import { instance } from "@/app/component/common/configs/axios-config"
 
-export const findAllBoardsAPI = async (page:number) => {
+export const findAllBoardsAPI = async () => {
     try {
-        const response = await instance.get('/boards/list' , {params: {page, limit: 10}})
+        const response = await instance().get('/boards/list')
         return response.data
     } catch (error) {
         console.log(error)
@@ -12,7 +12,7 @@ export const findAllBoardsAPI = async (page:number) => {
 
 export const findBoardByIdAPI = async (id:number) => {
     try {
-        const response = await instance.get(`/boards/detail` ,{params: {id}})
+        const response = await instance().get(`/boards/detail` ,{params: {id}})
         return response.data
     } catch (error) {
         console.log(error)

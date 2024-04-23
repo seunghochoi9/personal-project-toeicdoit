@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
         boolean flag = user.getPassword().equals(dto.getPassword());
 
         // 토큰을 각 섹션(Header, Payload, Signature)으로 분할
-        jwt.getPayload(accessToken);
+        jwt.printPayload(accessToken);
 
         return MessengerVo.builder()
                 .message(flag ? "SUCCESS" : "FAILURE")
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public MessengerVo existsByUsername(String username) {
-        log.info("existsByUsername Impl" + username);
+        log.info("existsByUsername Impl: " + username);
         boolean flag = false;
         if (repository.existsByUsername(username) == null) {
             flag = false;
@@ -121,6 +121,11 @@ public class UserServiceImpl implements UserService {
         return MessengerVo.builder()
                 .message(flag ? "SUCCESS" : "FAILURE")
                 .build();
+    }
+
+    @Override
+    public Boolean logout(Long id) {
+        return true;
     }
 }
 

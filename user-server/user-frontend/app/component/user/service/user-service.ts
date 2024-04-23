@@ -34,8 +34,6 @@ export const userDeleteById: any = createAsyncThunk(
 )
 
 export const login: any = createAsyncThunk(
-
-
     'users/login',
     async (user: IUser) => await loginAPI(user),
 

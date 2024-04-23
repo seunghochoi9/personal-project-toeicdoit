@@ -27,9 +27,6 @@ export const articleSlice = createSlice({
 })
 
 export const getAllArticles = (state: any) => (state.article.array)
-// console.log('------------------ Before useSelector ---------------')
-// console.log(JSON.stringify(state.article.array))
-
 export const getArticleById = (state: any) => (state.article.json)
 export const getArticleSave = (state: any) => (state.article.message)
 

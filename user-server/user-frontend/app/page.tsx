@@ -53,8 +53,9 @@ export default function Home() {
                 setCookie({}, 'accessToken', resp.payload.accessToken, { httpOnly: false, path: '/' })
                 console.log('서버에서 넘어온 메세지 ' + parseCookies().message)
                 console.log('서버에서 넘어온 토큰 ' + parseCookies().accessToken)
-                console.log("토큰을 디코드한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().accessToken)))
+                console.log("토큰을 jwtDecode(언박싱)한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().accessToken)))
                 router.push(`${PG.BOARD}/list`)
+                router.refresh()
               }
             })
             .catch((err: any) => {

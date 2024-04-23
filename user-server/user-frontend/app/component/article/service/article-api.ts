@@ -3,7 +3,7 @@ import { IArticle } from "../model/article"
 
 export const findAllArticlesAPI = async (id:number) => {
     try {
-        const response = await instance.get('/articles/list', {params: {id}})
+        const response = await instance().get('/articles/list', {params: {id}})
         return response.data
     } catch (error) {
         console.log(error)
@@ -13,7 +13,7 @@ export const findAllArticlesAPI = async (id:number) => {
 
 export const findArticleByIdAPI = async (id:number) => {
     try {
-        const response = await instance.get(`/articles/detail`, {params: {id}})
+        const response = await instance().get(`/articles/detail`, {params: {id}})
         return response.data
     } catch (error) {
         console.log(error)
@@ -23,7 +23,7 @@ export const findArticleByIdAPI = async (id:number) => {
 
 export const articleDeleteByIdAPI = async (id:number) => {
     try {
-        const response = await instance.delete(`/articles/delete` , {params:{id}})
+        const response = await instance().delete(`/articles/delete` , {params:{id}})
         return response.data
     } catch (error) {
         console.log(error)
@@ -33,7 +33,7 @@ export const articleDeleteByIdAPI = async (id:number) => {
 
 export const articleSaveAPI = async (article:IArticle) => {
     try {
-        const response = await instance.post(`/articles/save`, article)
+        const response = await instance().post(`/articles/save`, article)
         return response.data
     } catch (error) {
         console.log(error)

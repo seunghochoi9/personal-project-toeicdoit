@@ -15,12 +15,12 @@ function Header() {
 
   useEffect(() => {
     console.log('헤더 useEffect 쿠키 : ' + parseCookies().accessToken)
-    if (parseCookies().accessToken !== '') {
-      console.log('쿠키가 있어서 보임')
-      setShowProfile(true)
-    } else {
-      console.log('쿠키가 있어서 안보임')
+    if (parseCookies().accessToken === undefined) {
+      console.log('쿠키-X header-X')
       setShowProfile(false)
+    } else {
+      console.log('쿠키-O header-O')
+      setShowProfile(true)
     }
   }, [parseCookies().accessToken])
 
@@ -31,6 +31,7 @@ function Header() {
         destroyCookie(null, 'accessToken')
         setShowProfile(false)
         router.push('/')
+        router.refresh()
       })
       .catch(((err: any) => {
         console.log('로그아웃 실행에서 에러가 발생함' + err)

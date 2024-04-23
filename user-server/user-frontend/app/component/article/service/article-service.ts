@@ -5,10 +5,9 @@ import { IArticle } from "../model/article";
 
 export const findAllArticles: any = createAsyncThunk(
     'articles/findAllArticles',
-    async (id: number, { rejectWithValue }) => {
+    async (id: number) => {
         console.log('findAllArticlesBy Board id:' + id)
         const data: any = await findAllArticlesAPI(id);
-        const { message, result }: any = data
         return data
     }
 )

@@ -4,7 +4,7 @@ import { findAllBoardsAPI, findBoardByIdAPI } from "./board-api";
 
 export const findAllBoards: any = createAsyncThunk(
     'boards/findAllBoards',
-    async (page: number)=> await findAllBoardsAPI(page)
+    async (page: number)=> await findAllBoardsAPI()
 )
 
 export const findBoardById: any = createAsyncThunk(

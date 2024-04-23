@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Log4j2
 @Builder
 public class UserDto {
     private Long id;

@@ -31,7 +31,7 @@ public class BoardController {
         return ResponseEntity.ok(service.deleteById(id));
     }
     @GetMapping("/list")
-    public ResponseEntity<List<BoardDto>> findAll(PageRequestVo vo){
+    public ResponseEntity<List<BoardDto>> findAll(){
         return ResponseEntity.ok(service.findAll());
     }
 

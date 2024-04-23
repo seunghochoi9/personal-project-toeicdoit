@@ -40,6 +40,8 @@ public interface UserService extends CommandService<UserDto>, QueryService<UserD
 
     MessengerVo existsByUsername(String username);
 
+    Boolean logout(Long id);
+
 
     // default UserDto entityToDto(Optional<User> optional){
     //     return UserDto.builder().build();

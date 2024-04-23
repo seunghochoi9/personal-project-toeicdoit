@@ -1,7 +1,7 @@
 package com.erichgamma.api.common.component.security;
 
-
 import com.erichgamma.api.user.model.UserDto;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -19,11 +18,13 @@ import java.util.Date;
 @Log4j2
 @Component
 public class JwtProvider {
+    @Value("${jwt.secret}")
     private String issuer;
     private Long expiration;
     private final SecretKey secretKey;
+
     Instant expiredDate = Instant.now().plus(1, ChronoUnit.DAYS);
-    public JwtProvider(@Value("${jwt.secret}")String secretKey){
+    public JwtProvider(@Value("${jwt.secret}") String secretKey) {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
     }
 
@@ -41,26 +42,25 @@ public class JwtProvider {
     }
 
     public String extractTokenFromHeader(HttpServletRequest request) {
+        log.info("프론트에서 넘어온 request.getServletPath 값 : {}", request.getServletPath());
         String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
+        log.info("bearer이 포함된 Token: {}", bearerToken);
+        return bearerToken != null && bearerToken.startsWith("Bearer ") ? bearerToken.substring(7) : "undefined";
     }
 
-    public String getPayload(String accessToken) {
+    public void printPayload(String accessToken) {
         String[] chunks = accessToken.split("\\.");
         Base64.Decoder decoder = Base64.getUrlDecoder();
-
         String header = new String(decoder.decode(chunks[0]));
         String payload = new String(decoder.decode(chunks[1]));
-
         // DB에 토큰 넣는 로그
-//        repository.modifyTokenByToken(user.getId(), accessToken);
-
+        // repository.modifyTokenByToken(user.getId(), accessToken);
         log.info("accessToken header: " + header);
         log.info("accessToken payload: " + payload);
-//        return new StringBuilder().append(header).append(payload).toString();
-        return payload;
     }
+
+    public Claims getPayload(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+    }
+
 }

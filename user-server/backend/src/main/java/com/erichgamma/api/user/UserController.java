@@ -25,13 +25,14 @@ public class UserController {
     private final UserServiceImpl service;
 
     @SuppressWarnings("static-access")
-    @PostMapping( "/save")
+    @PostMapping("/save")
     public ResponseEntity<MessengerVo> save(@RequestBody UserDto dto) {
         return ResponseEntity.ok(service.save(dto));
 
     }
+
     @GetMapping("/list")
-    public ResponseEntity<List<UserDto>> findAll(PageRequestVo vo){
+    public ResponseEntity<List<UserDto>> findAll(PageRequestVo vo) {
         return ResponseEntity.ok(service.findAll());
     }
 
@@ -39,6 +40,7 @@ public class UserController {
     public ResponseEntity<Optional<UserDto>> findById(@RequestParam Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
+
     @PutMapping("/modify")
     public ResponseEntity<MessengerVo> modify(@RequestBody UserDto param) {
         return ResponseEntity.ok(service.modify(param));
@@ -48,6 +50,7 @@ public class UserController {
     public ResponseEntity<MessengerVo> deleteById(@RequestParam Long id) {
         return ResponseEntity.ok(service.deleteById(id));
     }
+
     @GetMapping("/count")
     public ResponseEntity<MessengerVo> count() {
         return ResponseEntity.ok(service.count());
@@ -58,20 +61,16 @@ public class UserController {
         return ResponseEntity.ok(service.findUsersByName(param.getName()));
     }
 
-    @PostMapping(path = "/login")
-    public ResponseEntity<MessengerVo> login(@RequestBody UserDto dto) {
-        log.info("login con: "+dto);
-        return ResponseEntity.ok(service.login(dto));
-    }
-
     @GetMapping("/exists")
     public ResponseEntity<Boolean> existsById(@RequestParam("id") long id) {
         return ResponseEntity.ok(service.existsById(id));
     }
 
-    @GetMapping("/exists-username")
-    public ResponseEntity<MessengerVo> existsByUsername(@RequestParam("username") String username) {
-        log.info("existsByUsername con: " + username);
-        return ResponseEntity.ok(service.existsByUsername(username));
+    @GetMapping("/logout")
+    public ResponseEntity<Boolean> logout(@RequestHeader("Authorization") String accessToken){
+        log.info("logout request : {}", accessToken);
+        Long id = 1L;
+        Boolean flag = service.logout(id);
+        return ResponseEntity.ok(flag);
     }
 }

@@ -25,7 +25,6 @@ const ArticleListPage: NextPage = ({params}:any) => {
   }, [])
 
   return (<>
-  <td><MoveButton text={"글쓰기"} path={`${PG.ARTICLE}/save`}/></td>
     <h2>게시글 목록</h2>
     <Box sx={{ height: 400, width: '100%' }}>
       {allArticles && <DataGrid
@@ -43,7 +42,7 @@ const ArticleListPage: NextPage = ({params}:any) => {
         disableRowSelectionOnClick
       />}
     </Box>
-
+    <MoveButton text={"글쓰기"} path={`${PG.ARTICLE}/save`}/>
   </>)
 }
 

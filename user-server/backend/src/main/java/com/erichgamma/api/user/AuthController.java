@@ -1,9 +1,8 @@
-package com.erichgamma.api.common.security;
-
+package com.erichgamma.api.user;
 
 import com.erichgamma.api.common.component.MessengerVo;
-import com.erichgamma.api.common.security.service.AuthService;
 import com.erichgamma.api.user.model.UserDto;
+import com.erichgamma.api.user.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +19,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api/auth")
 @Log4j2
 public class AuthController {
+    private final UserServiceImpl service;
 
-    private final AuthService service;
     @PostMapping(path = "/login")
     public ResponseEntity<MessengerVo> login(@RequestBody UserDto dto) {
-        log.info(dto);
+        log.info("login con: " + dto);
         return ResponseEntity.ok(service.login(dto));
     }
+
+    @GetMapping("/exists-username")
+    public ResponseEntity<MessengerVo> existsByUsername(@RequestParam("username") String username) {
+        log.info("existsByUsername con: " + username);
+        return ResponseEntity.ok(service.existsByUsername(username));
+    }
 }
+

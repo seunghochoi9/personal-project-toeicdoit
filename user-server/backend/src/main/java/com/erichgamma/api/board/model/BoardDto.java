@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Log4j2
 @Builder
 public class BoardDto {
     private Long id;
