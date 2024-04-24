@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Modifying
     @Query("update users set accessToken =:accessToken where id =:id" )
-    void modifyTokenByToken(@Param("id") Long id, String accessToken);
+    void modifyTokenByToken(@Param("id") Long id, @Param("accessToken") String accessToken);
 
     @Query("select a from users a where a.username =:username" )
     User existsByUsername(@Param("username") String username);

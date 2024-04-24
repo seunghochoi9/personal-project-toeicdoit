@@ -53,8 +53,8 @@ public class JwtProvider {
         Base64.Decoder decoder = Base64.getUrlDecoder();
         String header = new String(decoder.decode(chunks[0]));
         String payload = new String(decoder.decode(chunks[1]));
-        // DB에 토큰 넣는 로그
-        // repository.modifyTokenByToken(user.getId(), accessToken);
+
+
         log.info("accessToken header: " + header);
         log.info("accessToken payload: " + payload);
     }

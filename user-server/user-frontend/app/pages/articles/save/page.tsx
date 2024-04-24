@@ -12,6 +12,9 @@ import { useDispatch } from 'react-redux';
 import { articleSave } from '@/app/component/article/service/article-service';
 import { useSelector } from 'react-redux';
 import { getArticleSave } from '@/app/component/article/service/article-slice';
+import { findAllBoards } from '@/app/component/board/service/board-service';
+import { getAllBoards } from '@/app/component/board/service/board-slice';
+import { IBoard } from '@/app/component/board/model/board';
 // import React from "react";
 
 
@@ -22,27 +25,29 @@ export default function ArticleSavePage() {
   const [boardId, setBoardId] = useState({} as IArticle)
   const dispatch = useDispatch()
   const result = useSelector(getArticleSave)
+  const [content, setContent] = useState('')
+  const allBoard:IBoard[] = useSelector(getAllBoards)
+
 
   useEffect(() => {
     // if (result.message === "SUCCESS") {
     //   // setCookie({}, 'message', auth.message, { httpOnly: false, path: '/' })
     //   // setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
-    //   router.push(`${PG.ARTICLE}/list/${boardId}`)
+    //   router.push(`${PG.ARTICLE}/list/${id}`)
     // } else {
     //   console.log('LOGIN FAIL')
     // }
+    dispatch(findAllBoards())
   }, [])
 
-  const option = [
-    {boardId: 1, type: "review" },
-    {boardId: 2, type: "qna"}
-  ]
-
-
-  const handleBoardId = (e: any) => {
-    setArticle({ ...article, boardId: e.target.value })
+  const option = [allBoard[0], allBoard[1], allBoard[2]]
+  const handleContent = (e: any) => {
+    setArticle({ ...article, id: e.target.value })
     setBoardId(e.target.value)
+    setContent(e.target.value)
+    console.log(option)
   }
+
   const handleTitleInsert = (e: any) => {
     setArticle({ ...article, title: e.target.value })
   }
@@ -50,29 +55,28 @@ export default function ArticleSavePage() {
     setArticle({ ...article, content: e.target.value })
   }
   const handelCancel = () => {
-    console.log(boardId)
-    router.push(`${PG.ARTICLE}/list/${boardId}`)
+    // id에 boardId 값 넣어야함
+    // router.push(`${PG.ARTICLE}/list/${id}`)
   }
   const handleSubmit = () => {
     alert("작성완료")
-    console.log(boardId)
     console.log('article...' + JSON.stringify(article))
     dispatch(articleSave(article))
-
   }
 
   return (<>
 
     <form className="max-w-sm mx-auto">
-      <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">board type 선택</label>
-      <select onChange={handleBoardId} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        {option.map((item) => (<option key={item.boardId} value={item.boardId}>{item.type}</option>))}
+      <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">board title 선택</label>
+      <select onChange={handleContent} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        {/* {options.map((item) => (<option key={item.id} value={item.id}>{item.title}</option>))} */}
+        {allBoard.map((board) => (<option key={board.id} title={board.title}>{board.content}</option>))}
       </select>
     </form>
 
     <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
       {MyTypography('Article 작성', "1.5rem")}
-      <input className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" placeholder="Title" type="text" name="title" onChange={handleTitleInsert} />
+      <input className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" placeholder="Title" title="text" name="title" onChange={handleTitleInsert} />
       <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" placeholder="Describe everything about this post here" name="content" onChange={handleContentInsert}></textarea>
       {/* <!-- icons --> */}
       <div className="icons flex text-gray-500 m-2">

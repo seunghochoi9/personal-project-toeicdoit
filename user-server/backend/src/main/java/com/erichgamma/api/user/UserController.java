@@ -69,8 +69,7 @@ public class UserController {
     @GetMapping("/logout")
     public ResponseEntity<Boolean> logout(@RequestHeader("Authorization") String accessToken){
         log.info("logout request : {}", accessToken);
-        Long id = 1L;
-        Boolean flag = service.logout(id);
+        var flag = service.logout(accessToken);
         return ResponseEntity.ok(flag);
     }
 }

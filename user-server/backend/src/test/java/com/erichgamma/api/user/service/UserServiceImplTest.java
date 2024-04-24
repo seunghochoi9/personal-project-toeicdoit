@@ -1,15 +1,13 @@
-package com.erichgamma.api.user;
+package com.erichgamma.api.user.service;
 
 import com.erichgamma.api.user.model.User;
 import com.erichgamma.api.user.model.UserDto;
 import com.erichgamma.api.user.repository.UserRepository;
-import com.erichgamma.api.user.service.UserService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -60,9 +58,9 @@ public class UserServiceImplTest {
     @Test
     public void 사용자_전체_검색()throws Exception {
 
-        List<User> users = getList();
+        var users = getList();
         BDDMockito.given(repository.findAll()).willReturn(users);
-        List<UserDto> list = service.findAll();
+        var list = service.findAll();
         assertThat(list.size())
                 .isEqualTo(3);
 
