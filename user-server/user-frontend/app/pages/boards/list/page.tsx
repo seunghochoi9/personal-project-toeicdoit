@@ -17,7 +17,6 @@ export default function BoardCards() {
 
     return (<>
         <h2>게시판 목록 들어옴</h2>
-        {console.log(allBoard)}
         {allBoard.map((board:IBoard)=>(
            <CardButton key={board.id} id={board.id} title={board.title} description={board.description} />
         ))}

@@ -6,27 +6,28 @@ import com.erichgamma.api.article.model.ArticleDto;
 import com.erichgamma.api.board.repository.BoardRepository;
 import com.erichgamma.api.common.component.MessengerVo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
-
     private final ArticleRepository repo;
-    private final BoardRepository boardRepository;
 
 
     @Override
     public MessengerVo save(ArticleDto dto) {
+        log.info("Article save Impl: {}", dto);
         Article result = repo.save(dtoToEntity(dto));
-        System.out.println("============ BoardServiceImpl save instanceof ===========");
         System.out.println((result instanceof Article) ? "SUCCESS" : "FAILURE");
         return MessengerVo.builder()
                 .message((result instanceof Article) ? "SUCCESS" : "FAILURE")
+                .boardId(dto.getBoardId())
                 .build();
     }
 
@@ -77,10 +78,5 @@ public class ArticleServiceImpl implements ArticleService {
 
     public List<ArticleDto> getArticlesByBoardId(Long boardId){
         return repo.getArticlesByBoardId(boardId).stream().map(i -> entityToDto(i)).toList();
-
-//                repo.findAll()
-//                .stream()
-//                .filter(i -> i.getBoard().getId().equals(i))
-//                .map(i -> entityToDto(i)).toList();
     }
 }

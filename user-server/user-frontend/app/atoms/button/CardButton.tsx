@@ -3,12 +3,36 @@ import { IBoard } from "@/app/component/board/model/board";
 import { PG } from "@/app/component/common/enums/PG";
 import Link from "next/link";
 
+const cards = [
+    "https://www.tailwindtap.com/assets/components/horizontal-carousel/mountain-nightview.jpg",
+    "https://www.tailwindtap.com/assets/components/horizontal-carousel/autumn.jpg",
+    "https://www.tailwindtap.com/assets/components/horizontal-carousel/babypinetree.jpg",
+    "https://www.tailwindtap.com/assets/components/horizontal-carousel/beach.jpg",
+    "https://www.tailwindtap.com/assets/components/horizontal-carousel/purpleflowers.jpg",
+    "https://www.tailwindtap.com/assets/components/horizontal-carousel/starrysky.jpg",
+    "https://www.tailwindtap.com/assets/components/horizontal-carousel/lake.jpg",
+  ];
+
+  {cards.map((data, index) => {
+    return (
+      <section
+        className="flex-shrink-0 w-full snap-center justify-center items-center"
+        key={index}
+      >
+        <img
+          src={data}
+          alt="Images to scroll horizontal"
+          className="w-full h-[500px]"
+        />
+      </section>
+    );
+  })}
 
 export default function CardButton({ id, title, description }: IBoard) {
     return (<li>
         <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <Link key={id} href={`${PG.ARTICLE}/list/${id}`}>
-                <img className="rounded-t-lg" src="" alt="" />
+                <img className="rounded-t-lg" src="https://www.tailwindtap.com/assets/components/horizontal-carousel/mountain-nightview.jpg" alt="" />
             </Link>
             <div className="p-5">
                 <Link href={`${PG.ARTICLE}/list/${id}`}>

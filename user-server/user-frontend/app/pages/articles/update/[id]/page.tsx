@@ -22,7 +22,7 @@ import { parseCookies } from 'nookies';
 
 
 
-export default function ArticleSavePage() {
+export default function ArticleUpdatePage({id}:any) {
   const router = useRouter()
   const dispatch = useDispatch()
 

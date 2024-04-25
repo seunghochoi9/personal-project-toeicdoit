@@ -3,6 +3,7 @@ package com.erichgamma.api.article;
 import com.erichgamma.api.article.model.ArticleDto;
 import com.erichgamma.api.article.service.ArticleServiceImpl;
 import com.erichgamma.api.common.component.MessengerVo;
+import com.erichgamma.api.common.component.security.JwtProvider;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +25,11 @@ import java.util.Optional;
 public class ArticleController {
 
     private final ArticleServiceImpl service;
+    private final JwtProvider jwtProvider;
 
     @PostMapping("/save")
     public ResponseEntity<MessengerVo> save(@RequestBody ArticleDto dto){
-        log.info("save article: {}", dto);
+        log.info("article save con: {}", dto);
         return ResponseEntity.ok(service.save(dto));
     }
 
@@ -42,8 +44,14 @@ public class ArticleController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity<Optional<ArticleDto>> findById(@RequestParam Long id){
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<Optional<ArticleDto>> findById(@RequestHeader("Authorization")  String accessToken){
+        log.info("article findById 토큰: {}", accessToken);
+        String noBearerToken = accessToken.substring(7);
+        log.info("article findById noBearerToken: " + noBearerToken);
+        Long id = jwtProvider.getPayload(noBearerToken).get("id", Long.class);
+        log.info("article findById id: " + id);
+//        ResponseEntity.ok(service.findById(id));
+        return null;
     }
 
     @GetMapping("/count")

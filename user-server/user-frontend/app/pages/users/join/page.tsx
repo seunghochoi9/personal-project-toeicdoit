@@ -1,10 +1,10 @@
 'use client';
 import { API } from '@/app/component/common/enums/API';
-import AxiosConfig from '@/app/component/common/configs/axios-config';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { NextPage } from 'next';
+import { instance } from '@/app/component/common/configs/axios-config';
 
 const JoinPage: NextPage = () => {
     const router = useRouter();
@@ -47,7 +47,7 @@ const JoinPage: NextPage = () => {
         e.preventDefault()
         const url = `${API.SERVER}/api/users`
         const data = { username, password, name, phone, job, height, weight }
-        axios.post(url, data, AxiosConfig())
+        axios.post(url, data, )
             .then(res => { 
                 alert(JSON.stringify(res.data)),
                 router.push("/login")

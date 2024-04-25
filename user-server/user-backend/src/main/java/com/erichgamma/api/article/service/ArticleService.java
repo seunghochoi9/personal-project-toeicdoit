@@ -5,6 +5,7 @@ import com.erichgamma.api.article.model.ArticleDto;
 import com.erichgamma.api.board.model.Board;
 import com.erichgamma.api.common.service.CommandService;
 import com.erichgamma.api.common.service.QueryService;
+import com.erichgamma.api.user.model.User;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public interface ArticleService extends CommandService<ArticleDto>, QueryService
     default Article dtoToEntity(ArticleDto dto) {
         return Article.builder()
                 .board(Board.builder().id(dto.getBoardId()).build())
+                .writer(User.builder().id(dto.getWriter()).build())
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .build();
@@ -24,7 +26,7 @@ public interface ArticleService extends CommandService<ArticleDto>, QueryService
                 .boardId(entity.getBoard().getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
-                .writer(entity.getWriter() == null? "": entity.getWriter().getUsername())
+                .writer(entity.getWriter().getId())
                 .registerDate(entity.getRegDate().toString())
                 .modDate(entity.getModDate().toString())
                 .build();

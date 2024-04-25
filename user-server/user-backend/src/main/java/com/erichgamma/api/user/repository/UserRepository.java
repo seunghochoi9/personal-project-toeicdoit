@@ -1,6 +1,7 @@
 package com.erichgamma.api.user.repository;
 
 import com.erichgamma.api.article.model.Article;
+import com.erichgamma.api.board.model.Board;
 import com.erichgamma.api.common.component.MessengerVo;
 import com.erichgamma.api.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("select a from users a where a.username =:username" )
     User existsByUsername(@Param("username") String username);
+
+    List<User> findAllByOrderByIdDesc();
 }

@@ -14,8 +14,10 @@ export const findAllArticlesAPI = async (id:number) => {
 export const findArticleByIdAPI = async (id:number) => {
     try {
         const response = await instance().get(`/articles/detail`, {params: {id}})
+        console.log("response data: " + response.data)
         return response.data
     } catch (error) {
+
         console.log(error)
         return error
     }

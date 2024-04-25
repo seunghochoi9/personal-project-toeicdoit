@@ -1,4 +1,3 @@
-import { ReactNode } from "react"
 
 export interface IArticle{
     id?: number,
@@ -6,7 +5,7 @@ export interface IArticle{
     title?: string,
     content?: string,
     registerDate?: string,
-    writer?: ReactNode,
+    writer?: number,
     regDate?: string,
     modDate?: string,
     array?: IArticle[],

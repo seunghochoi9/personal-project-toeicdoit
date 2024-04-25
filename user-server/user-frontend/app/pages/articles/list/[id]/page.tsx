@@ -25,7 +25,19 @@ const ArticleListPage: NextPage = ({params}:any) => {
   }, [])
 
   return (<>
-    <h2>게시글 목록</h2>
+      <h2>게시글 목록</h2>
+  <table className="container" >
+    <thead>
+      <tr>
+        <td>
+        <MoveButton text={"글쓰기"} path={`${PG.ARTICLE}/save`}/>
+        </td>
+      </tr>
+  </thead>
+    <tbody>
+
+<tr>
+    <td>
     <Box sx={{ height: 400, width: '100%' }}>
       {allArticles && <DataGrid
         rows={allArticles}
@@ -42,7 +54,10 @@ const ArticleListPage: NextPage = ({params}:any) => {
         disableRowSelectionOnClick
       />}
     </Box>
-    <MoveButton text={"글쓰기"} path={`${PG.ARTICLE}/save`}/>
+   </td>
+    </tr>
+    </tbody>
+    </table>
   </>)
 }
 

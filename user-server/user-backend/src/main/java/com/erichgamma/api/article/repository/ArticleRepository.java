@@ -19,17 +19,18 @@ String article = "new com.erichgamma.api.article.model.ArticleDto("+
         "a.id, a.title, a.content, a.writer.username, a.board.id, a.regDate, a.modDate)";
 
 //JPQL Default
-    @Query("select a from articles a where a.board.id = :boardId")
+    @Query("select a from articles a where a.board.id = :boardId ORDER BY a.id desc")
     List<Article> getArticlesByBoardId(@Param("boardId") Long boardId);
 
 
 //Native
-    @Query(value = "select * from articles a where a.board.id = 1", nativeQuery = true)
-    List<Map<String, Object>>getQnaByArticles(); //Review 카테코리 값 1
+//    @Query("select * from articles a where a.board.id = 1", nativeQuery = true)
+//    List<Map<String, Object>>getQnaByArticles(); //Review 카테코리 값 1
 
 
 //JPSQL Return Type DTO
     @Query("select "+article+" from articles a where a.board.id = :boardId")
     List<ArticleDto> getArticlesDTOByBoardId(@Param("boardId") Long boardId);
 
+    List<Article> findAllByOrderByIdDesc();
 }

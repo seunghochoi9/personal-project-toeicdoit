@@ -34,7 +34,8 @@ export default function UserDetailPage({params}: any) {
         <span>regDate</span><Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>  {user.regDate}</Typography>
         <span>modDate</span><Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>  {user.modDate}</Typography><br />
         <div className="clearfix">
-                <button onClick={handleDelete}>삭제</button>
+                <button onClick={handleDelete}>탈퇴</button>
+                <button>수정</button>
             </div>
     </>)
 }

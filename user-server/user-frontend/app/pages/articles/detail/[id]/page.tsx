@@ -32,6 +32,7 @@ export default function ArticleDetailPage({ params }: any) {
 
     useEffect(() => {
         dispatch(findArticleById(params.id))
+        console.log(article)
     }, [])
 
 
@@ -52,6 +53,5 @@ export default function ArticleDetailPage({ params }: any) {
         <h3>내용 수정</h3>
         <input type="text" onChange={handleContent} /><br /><br />
         <button onClick={handleUpdate}>수정하기</button>
-
     </>)
 }

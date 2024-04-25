@@ -13,7 +13,7 @@ export  const linkButtonTitles = [
     {id:1, title:'카운터', path:`${PG.DEMO}/redux-counter`},
     {id:2, title:'게시판목록', path:`${PG.BOARD}/list`},
     {id:3, title:'게시글목록(구현안됨)', path:`${PG.ARTICLE}/list`}, 
-    {id:4, title:'사용자목록', path:`${PG.USER}/list`}
+    {id:4, title:'마이페이지', path:`${PG.USER}/detail/${1}`}
   ];
 
 

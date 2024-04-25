@@ -14,10 +14,9 @@ export const findAllArticles: any = createAsyncThunk(
 
 export const findArticleById: any = createAsyncThunk(
     'articles/findArticleById',
-    async (id: number, { rejectWithValue }) => {
-        console.log('findArticleById id:' + id)
+    async (id: number) => {
+        console.log('findArticleById request id:' + id)
         const data: any = await findArticleByIdAPI(id);
-        const { message, result }: any = data
         return data
     }
 )
