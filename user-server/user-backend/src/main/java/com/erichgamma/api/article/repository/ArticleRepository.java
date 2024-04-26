@@ -4,6 +4,7 @@ import com.erichgamma.api.article.model.Article;
 import com.erichgamma.api.article.model.ArticleDto;
 import com.erichgamma.api.board.model.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,9 @@ String article = "new com.erichgamma.api.article.model.ArticleDto("+
     @Query("select a from articles a where a.board.id = :boardId ORDER BY a.id desc")
     List<Article> getArticlesByBoardId(@Param("boardId") Long boardId);
 
+    @Modifying
+    @Query("update articles set title = :title, content= :content where id = :id")
+    void updateArticleById(@Param("id") Long id, @Param("title") String title, @Param("content") String content);
 
 //Native
 //    @Query("select * from articles a where a.board.id = 1", nativeQuery = true)

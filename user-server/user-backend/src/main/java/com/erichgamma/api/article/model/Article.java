@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j2;
 public class Article extends BaseEntity {
     @Id
     @Column(name ="id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String content;

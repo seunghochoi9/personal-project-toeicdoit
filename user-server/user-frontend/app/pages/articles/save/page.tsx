@@ -34,6 +34,7 @@ export default function ArticleSavePage() {
   useEffect(() => {
     dispatch(findAllBoards())
     console.log("토큰을 jwtDecode(언박싱)한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().accessToken)))
+    
   }, [])
 
   const onSubmit = (data: any) => {
@@ -42,8 +43,8 @@ export default function ArticleSavePage() {
     dispatch(articleSave(data))
       .then((res: any) => {
         alert('게시글 작성 완료')
-        console.log(res.payload)
-        router.push(`${PG.ARTICLE}/list/${res.payload.id}`)
+        console.log(res.payload.boardId)
+        router.push(`${PG.ARTICLE}/list/${res.payload.boardId}`)
       })
       .catch((err: any) => {
         console.log("실패")
@@ -60,12 +61,13 @@ export default function ArticleSavePage() {
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto">
       <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">board title 선택</label>
 
-      <select {...register('boardId', { required: true, maxLength: 30 }) } className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+      <select {...register('boardId', { required: true, maxLength: 30 })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         {allBoards.map((board) => (<option key={board.id} value={board.id} title={board.title}>{board.content}</option>))}
-
       </select>
+
       <input {...register('writer', { required: true, maxLength: 30 })} type="text" value={JSON.stringify(jwtDecode<any>(parseCookies().accessToken).userId)} />
+
       <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
         {MyTypography('Article 작성', "1.5rem")}
         <input {...register('title', { required: true, maxLength: 30 })}

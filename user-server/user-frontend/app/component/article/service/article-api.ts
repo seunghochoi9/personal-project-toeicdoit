@@ -14,7 +14,6 @@ export const findAllArticlesAPI = async (id:number) => {
 export const findArticleByIdAPI = async (id:number) => {
     try {
         const response = await instance().get(`/articles/detail`, {params: {id}})
-        console.log("response data: " + response.data)
         return response.data
     } catch (error) {
 
@@ -36,6 +35,18 @@ export const articleDeleteByIdAPI = async (id:number) => {
 export const articleSaveAPI = async (article:IArticle) => {
     try {
         const response = await instance().post(`/articles/save`, article)
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+export const modifyArticleAPI = async (article:IArticle) => {
+    try {
+        const response = await instance().put(`/articles/modify`, article)
+        console.log("response modifyArticleAPI : "+ response.data)
         return response.data
     } catch (error) {
         console.log(error)

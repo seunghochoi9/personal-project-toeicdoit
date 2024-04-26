@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity<Optional<UserDto>> findById(@RequestParam Long id) {
+    public ResponseEntity<Optional<UserDto>> findById(@RequestParam("id") Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<MessengerVo> deleteById(@RequestParam Long id) {
+    public ResponseEntity<MessengerVo> deleteById(@RequestParam("id") Long id) {
         return ResponseEntity.ok(service.deleteById(id));
     }
 
@@ -68,7 +68,7 @@ public class UserController {
 
     @GetMapping("/logout")
     public ResponseEntity<Boolean> logout(@RequestHeader("Authorization") String accessToken){
-        log.info("logout request : {}", accessToken);
+        log.info("logout RequestHeader con : {}", accessToken);
         var flag = service.logout(accessToken);
         return ResponseEntity.ok(flag);
     }

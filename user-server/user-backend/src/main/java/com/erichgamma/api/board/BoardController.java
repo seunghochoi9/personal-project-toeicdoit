@@ -27,7 +27,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<MessengerVo> deleteById(@RequestParam Long id){
+    public ResponseEntity<MessengerVo> deleteById(@RequestParam("id") Long id){
         return ResponseEntity.ok(service.deleteById(id));
     }
     @GetMapping("/list")
@@ -36,7 +36,7 @@ public class BoardController {
     }
 
     @GetMapping("/detail")
-    public ResponseEntity<Optional<BoardDto>> findById(@RequestParam Long id){
+    public ResponseEntity<Optional<BoardDto>> findById(@RequestParam("id") Long id){
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -46,7 +46,7 @@ public class BoardController {
     }
 
     @GetMapping("/exists")
-    public ResponseEntity<Boolean> existsById(@RequestParam long id){
+    public ResponseEntity<Boolean> existsById(@RequestParam("id") long id){
         return ResponseEntity.ok(service.existsById(id));
     }
 }

@@ -28,45 +28,41 @@ public class ArticleController {
     private final JwtProvider jwtProvider;
 
     @PostMapping("/save")
-    public ResponseEntity<MessengerVo> save(@RequestBody ArticleDto dto){
+    public ResponseEntity<MessengerVo> save(@RequestBody ArticleDto dto) {
         log.info("article save con: {}", dto);
         return ResponseEntity.ok(service.save(dto));
     }
 
     @PutMapping("/modify")
-    public ResponseEntity<MessengerVo> modify(@RequestBody  ArticleDto articleDto) {
-        return ResponseEntity.ok(service.modify(articleDto));
+    public ResponseEntity<MessengerVo> modify(@RequestBody ArticleDto dto) {
+        log.info("article modify con: {}", dto);
+        return ResponseEntity.ok(service.modify(dto));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<MessengerVo> deleteById(@RequestParam Long id){
+    public ResponseEntity<MessengerVo> deleteById(@RequestParam("id") Long id) {
         return ResponseEntity.ok(service.deleteById(id));
     }
 
     @GetMapping("/detail")
-    public ResponseEntity<Optional<ArticleDto>> findById(@RequestHeader("Authorization")  String accessToken){
-        log.info("article findById 토큰: {}", accessToken);
-        String noBearerToken = accessToken.substring(7);
-        log.info("article findById noBearerToken: " + noBearerToken);
-        Long id = jwtProvider.getPayload(noBearerToken).get("id", Long.class);
-        log.info("article findById id: " + id);
-//        ResponseEntity.ok(service.findById(id));
-        return null;
+    public ResponseEntity<Optional<ArticleDto>> findById(@RequestParam("id") Long id) {
+        log.info("Article findById con: {}", id);
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping("/count")
-    public ResponseEntity<MessengerVo> count(){
+    public ResponseEntity<MessengerVo> count() {
         return ResponseEntity.ok(service.count());
     }
 
     @GetMapping("/exists")
-    public ResponseEntity<Boolean> existsById(@RequestParam Long id){
+    public ResponseEntity<Boolean> existsById(@RequestParam("id") Long id) {
 
         return ResponseEntity.ok(service.existsById(id));
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<ArticleDto>> getArticlesByBoardId(@RequestParam("id") Long boardId){
+    public ResponseEntity<List<ArticleDto>> getArticlesByBoardId(@RequestParam("id") Long boardId) {
         return ResponseEntity.ok(service.getArticlesByBoardId(boardId));
     }
 

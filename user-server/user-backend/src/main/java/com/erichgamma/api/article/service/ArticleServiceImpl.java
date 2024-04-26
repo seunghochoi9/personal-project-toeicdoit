@@ -5,6 +5,7 @@ import com.erichgamma.api.article.repository.ArticleRepository;
 import com.erichgamma.api.article.model.ArticleDto;
 import com.erichgamma.api.board.repository.BoardRepository;
 import com.erichgamma.api.common.component.MessengerVo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.stream.Stream;
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository repo;
 
-
+    @Transactional
     @Override
     public MessengerVo save(ArticleDto dto) {
         log.info("Article save Impl: {}", dto);
@@ -44,10 +45,16 @@ public class ArticleServiceImpl implements ArticleService {
                 .build();
     }
 
+    @Transactional
     @Override
     public MessengerVo modify(ArticleDto dto) {
-        Article ent = repo.save(dtoToEntity(dto));
-        System.out.println("============ BoardServiceImpl modify instanceof ===========");
+        log.info("Article modify Impl: {}", dto);
+        Article ent = dtoToEntity(dto);
+        Long id = dto.getId();
+        String title = dto.getTitle();
+        String content = dto.getContent();
+        repo.updateArticleById(id, title, content);
+
         System.out.println((ent instanceof Article) ? "SUCCESS" : "FAILURE");
         return MessengerVo.builder()
                 .message((ent instanceof Article) ? "SUCCESS" : "FAILURE")
@@ -61,6 +68,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Optional<ArticleDto> findById(Long id) {
+        log.info("Article findById Impl: {}", id);
         return repo.findById(id).map(i -> entityToDto(i));
     }
 
@@ -76,7 +84,7 @@ public class ArticleServiceImpl implements ArticleService {
         return repo.existsById(id);
     }
 
-    public List<ArticleDto> getArticlesByBoardId(Long boardId){
+    public List<ArticleDto> getArticlesByBoardId(Long boardId) {
         return repo.getArticlesByBoardId(boardId).stream().map(i -> entityToDto(i)).toList();
     }
 }
