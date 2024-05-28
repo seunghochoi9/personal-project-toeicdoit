@@ -21,6 +21,12 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final UserServiceImpl service;
 
+
+    @PostMapping("/save")
+    public ResponseEntity<MessengerVo> save(@RequestBody UserDto dto) {
+        return ResponseEntity.ok(service.save(dto));
+    }
+
     @PostMapping(path = "/login")
     public ResponseEntity<MessengerVo> login(@RequestBody UserDto dto) {
         log.info("login con: " + dto);
@@ -32,5 +38,6 @@ public class AuthController {
         log.info("existsByUsername con: " + username);
         return ResponseEntity.ok(service.existsByUsername(username));
     }
+
 }
 

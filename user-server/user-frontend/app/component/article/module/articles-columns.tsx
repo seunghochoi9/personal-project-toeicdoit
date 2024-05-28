@@ -42,7 +42,7 @@ export default function ArticleColumns(): GridColDef[] {
             sortable: false,
             field: 'writer',
             headerName: '작성자',
-            renderCell: ({ row }: CellType) => MyTypography(row.writer, "1.2rem")
+            renderCell: ({ row }: CellType) => MyTypography(row.writerUsername, "1.2rem")
         }, 
         {
             flex: 0.04,
@@ -64,9 +64,9 @@ export default function ArticleColumns(): GridColDef[] {
             flex: 0.04,
             minWidth: 30,
             sortable: false,
-            field: 'delete',
-            headerName: '삭제',
-            renderCell: ({row}:CellType) => <Link href={""}>  {<Typography textAlign="center" sx={{fontSize:"1.5rem"}}> 삭제 </Typography>}</Link>
+            field: 'detail',
+            headerName: '상세보기',
+            renderCell: ({row}:CellType) => <Link href={`${PG.ARTICLE}/detail/${row.id}`} className="underline" >  {<Typography textAlign="center" sx={{fontSize:"1.5rem"}}> 상세보기 </Typography>}</Link>
         } 
     ]
 

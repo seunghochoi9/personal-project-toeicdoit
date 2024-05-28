@@ -177,7 +177,7 @@ export default function Home() {
           </a>
           <div className="mt-4 flex items-center w-full text-center">
             <Link
-              href="pages/users/joinImage"
+              href="pages/users/join"
               className="text-xs text-gray-500 capitalize text-center w-full"
             >
               Don&apos;t have any account yet?

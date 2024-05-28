@@ -29,7 +29,7 @@ public class JwtProvider {
     }
 
     public String createToken(UserDto dto) {
-        String token = Jwts.builder()
+        String accessToken = Jwts.builder()
                 .signWith(secretKey)
                 .expiration(Date.from(expiredDate))
                 .subject("erichgamma")
@@ -37,8 +37,19 @@ public class JwtProvider {
                 .claim("job", dto.getJob())
                 .claim("userId", dto.getId())
                 .compact();
-        log.info("createToken: " + token);
-        return token;
+        log.info("createToken: " + accessToken);
+
+//        String refreshToken = Jwts.builder()
+//                .signWith(secretKey)
+//                .expiration(Date.from(expiredDate.plus(1, ChronoUnit.DAYS)))
+//                .subject("erichgamma")
+//                .claim("username", dto.getUsername())
+//                .claim("job", dto.getJob())
+//                .claim("userId", dto.getId())
+//                .compact();
+
+
+        return accessToken;
     }
 
     public String extractTokenFromHeader(HttpServletRequest request) {

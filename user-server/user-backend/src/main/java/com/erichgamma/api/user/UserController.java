@@ -25,12 +25,6 @@ public class UserController {
     private final UserServiceImpl service;
 
     @SuppressWarnings("static-access")
-    @PostMapping("/save")
-    public ResponseEntity<MessengerVo> save(@RequestBody UserDto dto) {
-        return ResponseEntity.ok(service.save(dto));
-
-    }
-
     @GetMapping("/list")
     public ResponseEntity<List<UserDto>> findAll(PageRequestVo vo) {
         return ResponseEntity.ok(service.findAll());

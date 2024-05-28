@@ -65,3 +65,14 @@ export const logoutAPI = async () => {
         return error
     }
 }
+
+export const saveAPI = async (user:IUser) =>{
+    try{
+        const response = await instance().post(`/auth/save` , user)
+        //java에서 Messenger.message에 값을 담음
+        return response.data
+    }catch(error){
+        console.log(error)
+        return error
+    }
+}
