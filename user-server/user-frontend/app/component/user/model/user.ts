@@ -1,6 +1,6 @@
 export interface IUser{
     id?: number
-    addressId?: number
+    addressId?: string
     username?: string
     password?: string
     name?: string

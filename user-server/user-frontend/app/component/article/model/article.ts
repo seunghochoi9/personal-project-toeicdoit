@@ -2,7 +2,6 @@
 export interface IArticle{
     id?: number,
     boardId?: number,
-    boardContent?: string,
     title?: string,
     content?: string,
     registerDate?: string,

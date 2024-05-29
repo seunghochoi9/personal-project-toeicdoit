@@ -3,8 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import dynamic from "next/dynamic";
 import Header from "./component/common/module/header";
-import { useEffect, useState } from "react";
-import { parseCookies } from "nookies";
 
 const ReduxProvider = dynamic(() => import("@/redux/redux-provider"), {
   ssr: false
@@ -22,13 +20,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [showHeader, setShowHeader] = useState<Boolean>(false);
   return (
     <html lang="en">
       <body className={inter.className}>
-
         <div className="mt-100">
-          <ReduxProvider > {parseCookies().message === 'SUCCESS' && <Header />} {children} </ReduxProvider>
+          <ReduxProvider > <Header /> {children} </ReduxProvider>
         </div>
       </body>
     </html>

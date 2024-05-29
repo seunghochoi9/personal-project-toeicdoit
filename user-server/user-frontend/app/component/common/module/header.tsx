@@ -11,27 +11,26 @@ import { useDispatch } from 'react-redux';
 function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [showProfile, setShowProfile] = useState(false);
+  const [showMyPage, setShowMyPage] = useState(false);
 
   useEffect(() => {
     console.log('헤더 useEffect 쿠키 : ' + parseCookies().accessToken)
     if (parseCookies().accessToken === undefined) {
       console.log('쿠키-X header-X')
-      setShowProfile(false)
+      setShowMyPage(false)
     } else {
       console.log('쿠키-O header-O')
-      setShowProfile(true)
+      setShowMyPage(true)
     }
   }, [parseCookies().accessToken])
 
   const logoutHandler = () => {
-    console.log('로그아웃 적용 전 : ' + parseCookies().accessToken)
+    console.log('로그아웃 전 : ' + parseCookies().accessToken)
     dispatch(logout())
       .then((res: any) => {
         destroyCookie(null, 'accessToken')
-        setShowProfile(false)
-        router.push('/')
-        router.refresh()
+        setShowMyPage(false)
+        console.log('로그아웃 후 : ' + parseCookies().accessToken)
       })
       .catch(((err: any) => {
         console.log('로그아웃 실행에서 에러가 발생함' + err)
@@ -42,17 +41,24 @@ function Header() {
     <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <Link href={PG.HOME} className="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
-        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Home</span>
-      </Link>
-
-      {!showProfile && <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Toeic! Doit!</span>
+      </Link> 
+      {/* 버튼 keep
+      <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <span className="sr-only">Open user menu</span>
-        <img className="w-8 h-8 rounded-full" src="" alt="user photo" />
-      </button>}
-      {showProfile &&
+        <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
+      </button> */}
+
+      {!showMyPage && 
         <div className="flex px-4 py-3 float-end">
-          <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-          <span className="block text-sm  text-gray-500 truncate dark:text-gray-400 mx-5">name@flowbite.com</span>
+          <span className="block text-sm text-gray-900 dark:text-white"><a href={`${PG.USER}/login`}>로그인</a></span>
+          <span className="block text-sm  text-gray-500 truncate dark:text-gray-400 mx-5"><a href={`${PG.USER}/join`}>회원가입</a></span>
+        </div>
+      }
+      {showMyPage &&
+        <div className="flex px-4 py-3 float-end">
+          <span className="block text-sm text-gray-900 dark:text-white"><a href="#">강의실 입장</a></span>
+          <span className="block text-sm  text-gray-500 truncate dark:text-gray-400 mx-5"><a href={`${PG.USER}/detail/${1}`}>마이페이지</a></span>
           <span onClick={logoutHandler} className="block text-sm  text-gray-500 truncate dark:text-gray-400"> <a href='#'>Logout</a></span>
         </div>
       }
@@ -72,3 +78,4 @@ function Header() {
 }
 
 export default Header;
+

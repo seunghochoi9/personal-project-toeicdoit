@@ -51,7 +51,6 @@ export default function ArticleDetailPage({ params }: any) {
     <span>content</span><Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>  {getArticle.content}</Typography>
     <span>registerDate</span><Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>  {getArticle.registerDate}</Typography>
     <span>작성자</span><Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>  {getArticle.writerUsername}</Typography>
-    <span>게시판 종류</span><Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>  {getArticle.boardContent}</Typography>
     <span>regDate</span><Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>  {getArticle.regDate}</Typography>
     <span>modDate</span><Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>  {getArticle.modDate} </Typography>
     <div className="clearfix">

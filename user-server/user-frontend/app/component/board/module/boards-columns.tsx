@@ -37,8 +37,7 @@ export default function BoardColumns(): GridColDef[]{
             sortable: false,
             field: 'description',
             headerName: 'description',
-            renderCell: ({row}:CellType) => <Typography textAlign="center" sx={{fontSize:"1.2rem"}}>
-            <Link href={`${PG.BOARD}/detail/${row.id}`} className="underline" > {row.description} </Link></Typography>,
+            renderCell: ({row}:CellType) => <Typography textAlign="center" sx={{fontSize:"1.2rem"}}></Typography>,
         },
         {
             flex: 0.04,
