@@ -23,5 +23,9 @@ public interface UserRepository extends JpaRepository<UserModel,Long> {
     @Query("select a from users a where a.username =:username" )
     UserModel existsByUsername(@Param("username") String username);
 
+    @Modifying
+    @Query("UPDATE users u SET u.password = :password, u.job = :job, u.addressId = :addressId WHERE u.id = :id")
+    void updateUserById(@Param("id") Long id, @Param("password") String password, @Param("job") String job, @Param("addressId") String addressId);
+
     List<UserModel> findAllByOrderByIdDesc();
 }

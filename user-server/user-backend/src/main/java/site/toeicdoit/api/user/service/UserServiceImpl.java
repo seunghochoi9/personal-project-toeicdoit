@@ -32,12 +32,18 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+    @Transactional
     @Override
     public MessengerVo deleteById(Long id) {
-        repository.deleteById(id);
-        return MessengerVo.builder()
-                .message(repository.findById(id).isPresent() ? "SUCCESS" : "FAILURE")
-                .build();
+        log.info("deleteById Impl: " + id);
+
+        // Check if the user exists before attempting to delete
+        if (repository.existsById(id)) {
+            repository.deleteById(id); // This will now trigger cascading deletes
+            return MessengerVo.builder().message("SUCCESS").build();
+        } else {
+            return MessengerVo.builder().message("FAILURE").build();
+        }
     }
 
     @Override
@@ -62,11 +68,20 @@ public class UserServiceImpl implements UserService {
         return repository.existsById(id);
     }
 
+    @Transactional
     @Override
     public MessengerVo modify(UserDto dto) {
-        var ent = repository.save(dtoToEntity(dto));
-        log.info(" ============ BoardServiceImpl modify Entity =========== ");
-        log.info(ent);
+        log.info("UserModel modify Impl: {}", dto);
+
+        UserModel ent = dtoToEntity(dto);
+        Long id = dto.getId();
+        String password = dto.getPassword();
+        String job = dto.getJob(); // Assuming you have a username field
+        String addressId = dto.getAddressId();       // Assuming you have an email field
+        // Add other fields as necessary
+
+        repository.updateUserById(id, password, job, addressId);
+
         System.out.println((ent instanceof UserModel) ? "SUCCESS" : "FAILURE");
         return MessengerVo.builder()
                 .message((ent instanceof UserModel) ? "SUCCESS" : "FAILURE")

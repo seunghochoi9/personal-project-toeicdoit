@@ -4,6 +4,7 @@ import { PG } from '../enums/PG';
 import { useDispatch } from 'react-redux';
 import { parseCookies, destroyCookie } from 'nookies';
 import { logout } from '../../user/service/user-service';
+import { jwtDecode } from 'jwt-decode';
 
 function Header() {
   const [showMyPage, setShowMyPage] = useState(false);
@@ -75,7 +76,7 @@ function Header() {
           {showMyPage && (
             <>
               <Button color="inherit" href="#">강의실 입장</Button>
-              <Button color="inherit" href={`${PG.USER}/detail/${1}`}>마이페이지</Button>
+              <Button color="inherit" href={`${PG.USER}/detail/${jwtDecode<any>(parseCookies().accessToken).userId}`}>마이페이지</Button>
               <Button color="inherit" onClick={logoutHandler}>Logout</Button>
             </>
           )}

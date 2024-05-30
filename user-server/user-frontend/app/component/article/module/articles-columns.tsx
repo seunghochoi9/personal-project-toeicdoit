@@ -25,8 +25,7 @@ export default function ArticleColumns(): GridColDef[] {
             sortable: false,
             field: 'title',
             headerName: '제목',
-            renderCell: ({ row }: CellType) =>
-                <Link href={`${PG.ARTICLE}/detail/${row.id}`} className="underline" > {MyTypography(row.title, "1.2rem")} </Link>
+            renderCell: ({ row }: CellType) => MyTypography(row.title, "1.2rem")
         },
         {
             flex: 0.04,
@@ -43,7 +42,7 @@ export default function ArticleColumns(): GridColDef[] {
             field: 'writer',
             headerName: '작성자',
             renderCell: ({ row }: CellType) => MyTypography(row.writerUsername, "1.2rem")
-        }, 
+        },
         {
             flex: 0.04,
             minWidth: 30,
@@ -59,15 +58,16 @@ export default function ArticleColumns(): GridColDef[] {
             field: 'modDate',
             headerName: '수정일',
             renderCell: ({ row }: CellType) => MyTypography(row.modDate, "1.2rem")
-        },       
+        },
         {
             flex: 0.04,
             minWidth: 30,
             sortable: false,
             field: 'detail',
             headerName: '수정/삭제',
-            renderCell: ({row}:CellType) => <Link href={`${PG.ARTICLE}/update/${row.id}`} className="underline" >  {<Typography textAlign="center" sx={{fontSize:"1.5rem"}}> 수정/삭제 </Typography>}</Link>
-        } 
+            renderCell: ({ row }: CellType) => <Link href={`${PG.ARTICLE}/update/${row.id}`} className="underline" >  
+            {<Typography textAlign="center" sx={{ fontSize: "1.5rem" }}> 수정/삭제 </Typography>}</Link>
+        }
     ]
 
 }

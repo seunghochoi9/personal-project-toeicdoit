@@ -1,6 +1,7 @@
 package site.toeicdoit.api.article;
 
 import site.toeicdoit.api.article.model.ArticleDto;
+import site.toeicdoit.api.article.service.ArticleService;
 import site.toeicdoit.api.article.service.ArticleServiceImpl;
 import site.toeicdoit.api.common.component.MessengerVo;
 import site.toeicdoit.api.common.component.security.JwtProvider;
@@ -24,7 +25,7 @@ import java.util.Optional;
 @Log4j2
 public class ArticleController {
 
-    private final ArticleServiceImpl service;
+    private final ArticleService service;
     private final JwtProvider jwtProvider;
 
     @PostMapping("/save")

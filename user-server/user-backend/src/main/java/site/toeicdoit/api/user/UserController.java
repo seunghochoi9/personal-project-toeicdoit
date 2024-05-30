@@ -5,6 +5,7 @@ import java.util.*;
 import site.toeicdoit.api.common.component.MessengerVo;
 import site.toeicdoit.api.common.component.pagination.PageRequestVo;
 import site.toeicdoit.api.user.model.UserDto;
+import site.toeicdoit.api.user.service.UserService;
 import site.toeicdoit.api.user.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -22,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(path = "/api/users")
 @Log4j2
 public class UserController {
-    private final UserServiceImpl service;
+    private final UserService service;
 
     @SuppressWarnings("static-access")
     @GetMapping("/list")

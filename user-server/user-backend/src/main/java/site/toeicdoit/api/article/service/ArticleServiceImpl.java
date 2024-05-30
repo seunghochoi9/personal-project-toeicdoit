@@ -33,15 +33,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public MessengerVo deleteById(Long id) {
-        return MessengerVo.builder()
-                .message(
-                        Stream.of(id)
-                                .filter(i -> existsById(i))
-                                .peek(i -> repo.deleteById(i))
-                                .map(i -> "SUCCESS")
-                                .findAny()
-                                .orElseGet(() -> "FAILURE"))
-                .build();
+        log.info("deleteById Impl: " + id);
+        // Check if the user exists before attempting to delete
+        if (repo.existsById(id)) {
+            repo.deleteById(id); // This will now trigger cascading deletes
+            return MessengerVo.builder().message("SUCCESS").build();
+        } else {
+            return MessengerVo.builder().message("FAILURE").build();
+        }
+
     }
 
     @Transactional

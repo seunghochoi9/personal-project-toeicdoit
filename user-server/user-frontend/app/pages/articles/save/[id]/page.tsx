@@ -7,33 +7,29 @@ import { useForm } from 'react-hook-form';
 import { jwtDecode } from 'jwt-decode';
 import { parseCookies } from 'nookies';
 import { Typography } from '@mui/material';
-import { articleDeleteById, findArticleById, modifyArticle } from '@/app/component/article/service/article-service';
+import { articleSave } from '@/app/component/article/service/article-service';
 import { findAllBoards } from '@/app/component/board/service/board-service';
-import { getArticleById, getArticleSave } from '@/app/component/article/service/article-slice';
+import { getArticleSave } from '@/app/component/article/service/article-slice';
 import { getAllBoards } from '@/app/component/board/service/board-slice';
-import { IArticle } from '@/app/component/article/model/article';
 
-export default function ArticleUpdatePage({ params }: any) {
+export default function ArticleSavePage({ params }: any) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const result = useSelector(getArticleSave);
-  const getArticle: IArticle = useSelector(getArticleById);
+  const allBoards = useSelector(getAllBoards);
 
   useEffect(() => {
-    dispatch(findArticleById(params.id)).then((res: any) => {
-      setValue('title', res.payload.title);
-      setValue('content', res.payload.content);
-    });
+    dispatch(findAllBoards());
     console.log("토큰을 jwtDecode(언박싱)한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().accessToken)));
-  }, [dispatch, params.id, setValue]);
+  }, []);
 
   const onSubmit = (data: any) => {
     console.log(JSON.stringify(data));
-    dispatch(modifyArticle(data))
+    dispatch(articleSave(data))
       .then((res: any) => {
-        alert('게시글 수정 완료');
+        alert('게시글 작성 완료');
         console.log(res.payload);
         router.back();
       })
@@ -43,41 +39,17 @@ export default function ArticleUpdatePage({ params }: any) {
   };
 
   const handleCancel = () => {
-    alert('게시글 수정 취소');
+    alert('게시글 작성 취소');
     router.back();
-  };
-
-  const handleDelete = () => {
-    console.log('삭제Id' + params.id);
-    dispatch(articleDeleteById(params.id))
-      .then((res: any) => {
-        if (res.payload.message === "SUCCESS") {
-          alert('게시글 삭제 완료');
-          router.back();
-        } else {
-          alert('게시글 삭제 실패');
-        }
-      })
-      .catch((err: any) => {
-        console.log("실패");
-      });
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form onSubmit={handleSubmit(onSubmit)} className="relative bg-white shadow-md rounded-lg p-8 w-full max-w-2xl">
-        <button
-          className="absolute top-4 right-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="button"
-          onClick={handleDelete}
-        >
-          Delete
-        </button>
-
-        <Typography textAlign="center" sx={{ fontSize: "1.5rem", marginBottom: "1rem" }}>{params.id}번 게시글</Typography>
+        <Typography textAlign="center" sx={{ fontSize: "1.5rem", marginBottom: "1rem" }}>Article 작성</Typography>
 
         <input {...register('userId', { required: true, maxLength: 30 })} type="hidden" value={JSON.stringify(jwtDecode<any>(parseCookies().accessToken).userId)} />
-        <input {...register('id', { required: true, maxLength: 30 })} type="hidden" value={params.id} />
+        <input {...register('boardId', { required: true, maxLength: 30 })} type="hidden" value={params.id} />
 
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">Title</label>

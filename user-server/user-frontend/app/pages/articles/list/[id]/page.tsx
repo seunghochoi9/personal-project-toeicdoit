@@ -42,7 +42,7 @@ const handleWrite = () => {
       <thead>
         <tr>
           <td>
-            {writeCheck && <MoveButton text={"글쓰기"} path={`${PG.ARTICLE}/save`} />}
+            {writeCheck && <MoveButton text={"글쓰기"} path={`${PG.ARTICLE}/save/${params.id}`} />}
           </td>
         </tr>
       </thead>

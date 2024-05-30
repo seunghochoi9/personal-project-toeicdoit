@@ -76,3 +76,14 @@ export const saveAPI = async (user:IUser) =>{
         return error
     }
 }
+
+export const modifyUserAPI = async (user:IUser) =>{
+    try{
+        const response = await instance().put(`/users/modify` , user)
+        //java에서 Messenger.message에 값을 담음
+        return response.data
+    }catch(error){
+        console.log(error)
+        return error
+    }
+}

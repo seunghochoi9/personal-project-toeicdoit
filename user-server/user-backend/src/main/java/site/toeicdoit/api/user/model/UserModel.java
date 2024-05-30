@@ -26,7 +26,7 @@ public class UserModel extends BaseEntity {
     private String job;
     private String accessToken;
 
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ArticleModel> articles;
 
 }
