@@ -20,7 +20,6 @@ const JoinPage: NextPage = () => {
     const IsWrongId = useSelector(getExistsId)
     const PasswordRef = useRef<HTMLInputElement>(null);
 
-
     const handleUsername = (e: any) => {
         const ID_CHECK = /^[a-zA-Z][a-zA-Z0-9]{5,19}$/g;
         if (ID_CHECK.test(e.target.value)) {
@@ -67,8 +66,8 @@ const JoinPage: NextPage = () => {
                             if (resp.payload.message === "SUCCESS") {
                                 console.log('서버에서 넘어온 payload ' + JSON.stringify(resp))
                                 console.log("회원 가입 성공")
-                                // router.push(`${PG.HOME}`)
-                                // router.refresh()
+                                router.push(PG.HOME)
+                                router.refresh()
                             }
                         })
                         .catch((err: any) => {
@@ -100,52 +99,106 @@ const JoinPage: NextPage = () => {
             })
     }
 
-
-    return (<>
-        <div className="container">
-            <h1>Sign Up</h1>
-            <p>Please fill in this form to create an account.</p>
-            <hr />
-
-            <label htmlFor="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required onChange={handleUsername} /><br />
-            <h6>*영어 시작하는 6~20자의 영어 대소문자 또는 숫자</h6>
-            {idCheck === 'false' && (<pre><h6 className="text-red-700">사용 불가한 아이디 입니다.</h6></pre>)}
-            {idCheck === 'true' && (<pre><h6 className="text-green-700">사용 가능한 아이디 입니다.</h6></pre>)}
-            <button type="submit" className="signupbtn" onClick={handleIdCheck}>ID 중복 확인</button><br /><br />
-
-
-            <label htmlFor="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required onChange={handlePassword} /><br />
-            <h2>영어 대소문자 , 숫자, 특수문자 각 1개씩 필요, 8~20</h2><br />
-            {pwCheck === 'false' && (<pre><h6 className="text-red-700">사용 불가한 비밀번호 입니다.</h6></pre>)}
-            {pwCheck === 'true' && (<pre><h6 className="text-green-700">사용 가능한 비밀번호 입니다.</h6></pre>)}<br />
-
-            <label htmlFor="name"><b>Name</b></label>
-            <input type="name" placeholder="Enter Name" name="name" required onChange={handleName} /><br />
-
-            <label htmlFor="phone"><b>Phone</b></label>
-            <input type="phone" placeholder="Enter Phone" name="phone" required onChange={handlePhone} /><br />
-
-            <label htmlFor="email"><b>email</b></label>
-            <input type="email" placeholder="Enter email" name="email" required onChange={handleAddressId} /><br />
-
-            <label htmlFor="job"><b>Job</b></label>
-            <input type="job" placeholder="Enter Job" name="job" required onChange={handleJob} /><br /><br /><br />
-
-            {/* <label>
-                <input type="checkbox" checked={true} name="remember" style={{ marginBottom: "15px" }} /> Remember me
-            </label> */}
-
-            {/* <p>By creating an account you agree to our <a href="#" style={{ color: "dodgerblue" }}>Terms & Privacy</a>.</p> */}
-
-            <div className="clearfix">
-                <button type="button" className="cancelbtn">Cancel</button><br /><br />
-                <button type="submit" className="signupbtn" onClick={handleSubmit}>Sign Up</button>
+    return (
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-400 to-pink-500">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+            <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">Create Account</h1>
+    
+            {/* Form Inputs */}
+            <div className="space-y-4">
+              {/* Username */}
+              <div>
+                <label htmlFor="username" className="block text-gray-700 font-bold mb-2">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Enter Username"
+                  required
+                  onChange={handleUsername}
+                  className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  * 6-20 characters, English letters (uppercase/lowercase) or numbers
+                </p>
+                {idCheck === 'false' && (
+                  <p className="text-red-500 text-xs italic mt-1">Invalid username</p>
+                )}
+                {idCheck === 'true' && (
+                  <p className="text-green-500 text-xs italic mt-1">Valid username</p>
+                )}
+                <button
+                  type="button"
+                  onClick={handleIdCheck}
+                  className="w-full mt-2 px-4 py-2 bg-purple-500 hover:bg-purple-700 text-white rounded-md focus:outline-none focus:ring focus:ring-purple-500"
+                >
+                  Check Availability
+                </button>
+              </div>
+    
+              {/* Password */}
+              <div>
+                <label htmlFor="psw" className="block text-gray-700 font-bold mb-2">Password</label>
+                <input
+                  type="password"
+                  id="psw"
+                  name="psw"
+                  placeholder="Enter Password"
+                  required
+                  onChange={handlePassword}
+                  className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  * 8-20 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character
+                </p>
+                {pwCheck === 'false' && (
+                  <p className="text-red-500 text-xs italic mt-1">Invalid password</p>
+                )}
+                {pwCheck === 'true' && (
+                  <p className="text-green-500 text-xs italic mt-1">Valid password</p>
+                )}
+              </div>
+    
+              {/* Name */}
+              <div>
+                <label htmlFor="name" className="block text-sm font-bold mb-2">Name</label>
+                <input type="name" placeholder="Enter Name" name="name" required onChange={handleName} className="w-full p-2 mb-4 border rounded" />
+              </div>
+    
+              {/* Phone */}
+              <div>
+                <label htmlFor="phone" className="block text-sm font-bold mb-2">Phone</label>
+                <input type="phone" placeholder="Enter Phone" name="phone" required onChange={handlePhone} className="w-full p-2 mb-4 border rounded" />
+              </div>
+    
+              {/* Email */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-bold mb-2">Email</label>
+                <input type="email" placeholder="Enter Email" name="email" required onChange={handleAddressId} className="w-full p-2 mb-4 border rounded" />
+              </div>
+    
+              {/* Job */}
+              <div>
+                <label htmlFor="job" className="block text-sm font-bold mb-2">Job</label>
+                <input type="job" placeholder="Enter Job" name="job" required onChange={handleJob} className="w-full p-2 mb-4 border rounded" />
+              </div>
+    
+              <div className="flex justify-between">
+                <button type="button" className="w-1/2 mr-2 py-2 px-4 bg-gray-500 hover:bg-gray-700 text-white rounded-md focus:outline-none focus:ring focus:ring-gray-500">
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  onClick={handleSubmit} 
+                  className="w-1/2 ml-2 py-2 px-4 bg-green-500 hover:bg-green-700 text-white rounded-md focus:outline-none focus:ring focus:ring-green-500"
+                >
+                  Sign Up
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-    </>)
-
-}
+      );
+    };
 
 export default JoinPage;

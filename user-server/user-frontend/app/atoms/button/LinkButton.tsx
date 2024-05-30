@@ -10,7 +10,8 @@ interface ILinkButton {
 }
 
 export  const linkButtonTitles = [
-    {id:1, title:'게시판목록(리뷰, 고객센터, 공지사항)', path:`${PG.BOARD}/list`},
+    {id:1, title:'Review', path:`${PG.ARTICLE}/list/1`},
+    {id:2, title:'고객센터', path:`${PG.ARTICLE}/list/2`},
     // 다른 게시판 구현 시 추가 예정
   ];
 

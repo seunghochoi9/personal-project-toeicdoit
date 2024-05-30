@@ -1,7 +1,6 @@
 # show tables;
-insert into boards (id, title, description, reg_date, mod_date) values(1, "수강후기", "수강 후기 게시판", now(), now());
+insert into boards (id, title, description, reg_date, mod_date) values(1, "Reviews", "수강 후기 게시판", now(), now());
 insert into boards (id, title, description, reg_date, mod_date) values(2, "고객센터", "고객 문의 게시판", now(), now());
-insert into boards (id, title, description, reg_date, mod_date) values(3, "공지사항", "공지 내용 게시판", now(), now());
 insert into users (id, username, password, name, phone, job , reg_date, mod_date) values (1, 'Clarinda', 'Boilermaker1!', 'Chrissie', '230-644-4753', 'Professor', now(), now());
 insert into users (id, username, password, name, phone, job , reg_date, mod_date) values (2, 'CulionIsland', 'Ironworker1!', 'Fannie', '372-654-5644', 'Analog Circuit Design manager', now(), now());
 insert into users (id, username, password, name, phone, job , reg_date, mod_date) values (3, 'HoumaHouma', 'Ironworker1!', 'Zaria', '921-901-6334', 'Media Manager II', now(), now());

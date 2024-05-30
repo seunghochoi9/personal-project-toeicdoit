@@ -1,10 +1,19 @@
 'use client';
 
+import Banner from "./component/common/module/banner";
+import RecommendedCourses from "./component/common/module/recommendedCourses";
+import Footer from "./component/common/module/footer";
+import Reviews from "./component/common/module/review";
+
+
 export default function Home() {
 
-  return (<div className='text-center'>
-    <div>Welcome to the TOEIC! DoIt!</div><br />
-    <div>메인 화면</div><br /><br />
-    </div>
+  return  (
+    <>
+      <Banner />
+      <RecommendedCourses />
+      <Reviews />
+      <Footer />
+    </>
   );
 }
