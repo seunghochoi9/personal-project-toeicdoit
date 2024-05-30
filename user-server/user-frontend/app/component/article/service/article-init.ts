@@ -6,7 +6,7 @@ export const initialState:IArticle = {
     title: '',
     content: '',
     registerDate: '',
-    writer: 0,
+    userId: 0,
     writerUsername: '',
     regDate: '',
     modDate: '',

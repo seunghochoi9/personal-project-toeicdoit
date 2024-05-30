@@ -14,13 +14,8 @@ import { PG } from "@/app/component/common/enums/PG";
 export default function Login() {
     const router = useRouter();
     const dispatch = useDispatch();
-    const auth = useSelector(getAuth);
     const PasswordRef = useRef<HTMLInputElement>(null);
-
     const [user, setUser] = useState({} as IUser)
-    const [idCheck, setIdCheck] = useState('')
-    const [isPwCheck, setIsPwCheck] = useState('')
-    const IsWrongId = useSelector(getExistsId)
 
     const handleUsername = (e: any) => {
         setUser({ ...user, username: e.target.value })
@@ -45,7 +40,6 @@ export default function Login() {
                                 console.log('서버에서 넘어온 토큰 ' + parseCookies().accessToken)
                                 console.log("토큰을 jwtDecode(언박싱)한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().accessToken)))
                                 router.push(`${PG.HOME}`)
-                                router.refresh()
                             } else {
                                 console.log("비번 틀림")
                             }
@@ -101,7 +95,7 @@ export default function Login() {
               <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Sign In
               </button>
-              <Link href="pages/users/join" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+              <Link href={`${PG.USER}/join`} className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
                 Create an Account
               </Link>
             </div>

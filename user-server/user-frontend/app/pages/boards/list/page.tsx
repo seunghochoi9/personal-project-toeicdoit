@@ -7,6 +7,7 @@ import { log } from "console"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
+// 관리자 페이지에서 보여야 할 듯
 export default function BoardCards() {
     const dispatch = useDispatch()
     const allBoard = useSelector(getAllBoards)

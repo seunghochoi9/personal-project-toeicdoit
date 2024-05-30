@@ -8,6 +8,7 @@ import { NextPage } from "next"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
+// 관리자 페이지에서 보여야 할 듯
 const UsersPage: NextPage = () => {
   const [pageSize, setPageSize] = useState(5);
   const dispatch = useDispatch()

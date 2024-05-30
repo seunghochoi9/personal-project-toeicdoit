@@ -1,5 +1,7 @@
 import Link from "next/link";
 import React from "react";
+
+// 로그인 페이지 reference
 const RegistartionForm = () => {
   return (
     <div className="h-[80vh] items-center flex justify-center px-5 lg:px-0">

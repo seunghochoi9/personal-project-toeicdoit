@@ -64,7 +64,7 @@ export default function ArticleSavePage() {
         {allBoards.map((board) => (<option key={board.id} value={board.id} title={board.title}>{board.title}</option>))}
       </select>
       
-      <input {...register('writer', { required: true, maxLength: 30 })} type="hidden" value={JSON.stringify(jwtDecode<any>(parseCookies().accessToken).userId)} />
+      <input {...register('userId', { required: true, maxLength: 30 })} type="hidden" value={JSON.stringify(jwtDecode<any>(parseCookies().accessToken).userId)} />
 
       <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
         {MyTypography('Article 작성', "1.5rem")}

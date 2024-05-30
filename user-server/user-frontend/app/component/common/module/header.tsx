@@ -10,19 +10,24 @@ function Header() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('헤더 useEffect 쿠키 : ' + parseCookies().accessToken)
     const cookies = parseCookies();
     if (cookies.accessToken === undefined) {
+      console.log('쿠키-X header-X')
       setShowMyPage(false);
     } else {
+      console.log('쿠키-O header-O')
       setShowMyPage(true);
     }
-  }, []);
+  }, [parseCookies().accessToken]);
 
   const logoutHandler = () => {
+    console.log('로그아웃 전 : ' + parseCookies().accessToken)
     dispatch(logout())
       .then(() => {
         destroyCookie(null, 'accessToken');
         setShowMyPage(false);
+        console.log('로그아웃 후 : ' + parseCookies().accessToken)
       })
       .catch((err: any) => {
         console.error('로그아웃 에러:', err);

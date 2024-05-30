@@ -65,8 +65,8 @@ export default function ArticleColumns(): GridColDef[] {
             minWidth: 30,
             sortable: false,
             field: 'detail',
-            headerName: '상세보기',
-            renderCell: ({row}:CellType) => <Link href={`${PG.ARTICLE}/detail/${row.id}`} className="underline" >  {<Typography textAlign="center" sx={{fontSize:"1.5rem"}}> 상세보기 </Typography>}</Link>
+            headerName: '수정/삭제',
+            renderCell: ({row}:CellType) => <Link href={`${PG.ARTICLE}/update/${row.id}`} className="underline" >  {<Typography textAlign="center" sx={{fontSize:"1.5rem"}}> 수정/삭제 </Typography>}</Link>
         } 
     ]
 

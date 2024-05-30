@@ -23,7 +23,7 @@ const ArticleListPage: NextPage = ({ params }: any) => {
   const [writeCheck, setWriteCheck] = useState(false)
 
 const handleWrite = () => {
-    if (parseCookies().accessToken !== undefined && params.id !== '3'){
+    if (parseCookies().accessToken !== undefined){
       setWriteCheck(true)
     } else {
       setWriteCheck(false)
@@ -32,9 +32,9 @@ const handleWrite = () => {
 }
   useEffect(() => {
     dispatch(findAllArticles(params.id))
-    console.log(typeof(params.id))
+    console.log(params.id)
     handleWrite()
-  }, [])
+  }, [parseCookies().accessToken])
 
   return (<>
     <h2>게시글 목록</h2>

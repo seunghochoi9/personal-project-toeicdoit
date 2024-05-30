@@ -5,7 +5,7 @@ export interface IArticle{
     title?: string,
     content?: string,
     registerDate?: string,
-    writer?: number,
+    userId?: number,
     writerUsername?: string,
     regDate?: string,
     modDate?: string,
