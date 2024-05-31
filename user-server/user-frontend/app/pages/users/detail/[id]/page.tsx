@@ -81,7 +81,7 @@ export default function UserMyPage({ params }: any) {
 
                 <Stack direction="row" spacing={2} className="mt-4">
                     <Button variant="contained" color="error" onClick={handleDelete}>Delete Account</Button>
-                    <Button variant="outlined" color="primary" onClick={() => router.back()}>Back to List</Button>
+                    <Button variant="outlined" color="primary" onClick={() => router.back()}>Cancel</Button>
                 </Stack>
             </Paper>
 

@@ -18,11 +18,11 @@ public class UserModel extends BaseEntity {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String addressId;
     private String username;
     private String password;
     private String name;
     private String phone;
+    private String addressId;
     private String job;
     private String accessToken;
 

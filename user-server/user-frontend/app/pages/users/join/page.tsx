@@ -31,7 +31,7 @@ const JoinPage: NextPage = () => {
     }
 
     const handlePassword = (e: any) => {
-        const PW_CHECK = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]).{7,19}$/g;
+        const PW_CHECK = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]).{7,19}$/g;
         if (PW_CHECK.test(e.target.value)) {
             setPwCheck('true')
             setUser({ ...user, password: e.target.value })
@@ -119,7 +119,7 @@ const JoinPage: NextPage = () => {
                   className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  * 6-20 characters, English letters (uppercase/lowercase) or numbers
+                  * 6~20자, 영문(대/소문자) 또는 숫자
                 </p>
                 {idCheck === 'false' && (
                   <p className="text-red-500 text-xs italic mt-1">Invalid username</p>
@@ -149,7 +149,7 @@ const JoinPage: NextPage = () => {
                   className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  * 8-20 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character
+                  * 8~20자, 대문자 1개, 소문자 1개, 숫자 1개, 특수문자 1개 이상
                 </p>
                 {pwCheck === 'false' && (
                   <p className="text-red-500 text-xs italic mt-1">Invalid password</p>

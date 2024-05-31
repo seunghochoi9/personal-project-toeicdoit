@@ -11,13 +11,11 @@ function Header() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('헤더 useEffect 쿠키 : ' + parseCookies().accessToken)
+    console.log('쿠키 정보: ' + parseCookies().accessToken)
     const cookies = parseCookies();
     if (cookies.accessToken === undefined) {
-      console.log('쿠키-X header-X')
       setShowMyPage(false);
     } else {
-      console.log('쿠키-O header-O')
       setShowMyPage(true);
     }
   }, [parseCookies().accessToken]);

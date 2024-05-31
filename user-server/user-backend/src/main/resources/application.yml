@@ -3,7 +3,7 @@ spring:
     name: api
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/toeicdoitdb
+    url: jdbc:mysql://223.130.154.187:3306/toeicdoitdb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: root
   config:
@@ -37,6 +37,10 @@ logging:
       hibernate:
         SQL: debug
         type: trace
+
+server:
+    port: 8090
+
 
 jwt:
   iss: erichgamma.co.kr

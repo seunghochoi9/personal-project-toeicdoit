@@ -34,6 +34,7 @@ public interface UserService extends CommandService<UserDto>, QueryService<UserD
                 .password(userModel.getPassword())
                 .name(userModel.getName())
                 .phone(userModel.getPhone())
+                .addressId(userModel.getAddressId())
                 .job(userModel.getJob())
                 .build();
     }

@@ -29,7 +29,7 @@ export default function Login() {
         dispatch(existsId(user.username))
             .then((res: any) => {
                 if (res.payload.message === "SUCCESS") {
-                    console.log("아이디가 존재합니다.")
+                    console.log("아이디 체크 확인")
                     dispatch(login(user))
                         .then((resp: any) => {
                             if (resp.payload.message === "SUCCESS") {
@@ -39,14 +39,15 @@ export default function Login() {
                                 console.log('서버에서 넘어온 메세지 ' + parseCookies().message)
                                 console.log('서버에서 넘어온 토큰 ' + parseCookies().accessToken)
                                 console.log("토큰을 jwtDecode(언박싱)한 내용" + JSON.stringify(jwtDecode<any>(parseCookies().accessToken)))
+                                alert("로그인 성공")
                                 router.push(`${PG.HOME}`)
                             } else {
-                                console.log("비번 틀림")
+                                alert("비밀번호가 틀립니다. 다시 시도해 주세요.")
                             }
                         })
                         .catch((err: any) => { })
                 } else {
-                    console.log("아이디가 존재하지 않습니다.")
+                  alert("아이디 틀립니다. 다시 시도해 주세요.")
                 }
             })
             .catch((err: any) => { })
